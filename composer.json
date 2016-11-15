@@ -1,0 +1,13 @@
+{
+    "name": "davethegr8/urban-octo",
+    "description": "",
+    "require": {
+        "php" : "^5.5"
+    },
+    "autoload": {
+        "psr-4": {"UrbanOcto\\": "src/"},
+        "files": [
+            "src/bootstrap.php"
+        ]
+    }
+}
