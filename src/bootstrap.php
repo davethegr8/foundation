@@ -21,6 +21,18 @@ function array_pluck($key, $array) {
     return array_column($array, $key);
 }
 
+function array_collect($keys, $array) {
+    if(!is_array($keys)) {
+        return array_column($array, $keys);
+    }
+
+    return array_map(function ($item) use ($keys) {
+        return array_combine($keys, array_map(function ($key) use ($item) {
+            return array_key_exists($key, $item) ? $item[$key] : null;
+        }, $keys));
+    }, $array);
+}
+
 /**
  * Rounds to the nearest multiple of $interval. eg 4,8,12 etc
  */
