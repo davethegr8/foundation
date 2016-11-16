@@ -122,3 +122,13 @@ function eor() {
         if($arg) return $arg;
     }
 }
+
+//pass by ref to save memory
+function lower($str) {
+    return strtolower($str);
+}
+
+//pass by ref to save memory
+function upper($str) {
+    return strtoupper($str);
+}
