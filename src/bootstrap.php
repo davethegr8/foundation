@@ -17,9 +17,8 @@ function debug() {
 }
 
 function array_pluck($key, $array) {
-    return array_map(function ($item) use ($key) {
-        return $item[$key];
-    }, $array);
+    trigger_error("array_pluck is deprecated - use array_column instead", E_USER_DEPRECATED);
+    return array_column($array, $key);
 }
 
 /**
