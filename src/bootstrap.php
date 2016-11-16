@@ -118,6 +118,12 @@ function file_extension($filename) {
     }
 }
 
+function file_name($str) {
+    //finds the last thing like \w\.{extension}
+    preg_match('/(\w+)\.(\w+)$/', $str, $matches);
+    return $matches[0];
+}
+
 /* Takes a bunch of parameters and returns the first one that
 is equivalent to bool(true) */
 function eor() {
