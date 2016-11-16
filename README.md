@@ -1,6 +1,4 @@
-# urban-octo
-
-_I use github's repository name suggestions_
+# handy-php
 
 Helpers and util stuff for php
 
