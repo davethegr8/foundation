@@ -166,3 +166,8 @@ function file_upload($file, $destination) {
 
     return $filename.$extension;
 }
+
+function getHTMLAttrs($tag) {
+    preg_match_all('/(\w+)=\"(.+)\"/U', $tag, $matches);
+    $attrs = array_combine($matches[1], $matches[2]);
+}
