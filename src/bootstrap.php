@@ -145,3 +145,20 @@ function _active($value, $check = NULL)  {
 function _selected($value, $check = NULL) {
     return _checked($value, $check, 'selected');
 }
+
+function file_upload($file, $destination) {
+    $filename = '';
+
+    if(is_uploaded_file($file['tmp_name'])) {
+        $extension = '.'.file_extension($file['name']);
+        $filename = md5($file['name']);
+
+        while(file_exists($destination.$filename.$extension)) {
+            $filename = md5($filename);
+        }
+
+        $move = move_uploaded_file($file['tmp_name'], $destination.$filename.$extension);
+    }
+
+    return $filename.$extension;
+}
