@@ -132,3 +132,16 @@ function lower($str) {
 function upper($str) {
     return strtoupper($str);
 }
+
+
+function _checked($value, $check = NULL, $return = 'checked') {
+    return (($check !== NULL && $value == $check) || ($value && $check === NULL) ? $return : '');
+}
+
+function _active($value, $check = NULL)  {
+    return _checked($value, $check, 'active');
+}
+
+function _selected($value, $check = NULL) {
+    return _checked($value, $check, 'selected');
+}
