@@ -113,3 +113,12 @@ function file_extension($filename) {
         return substr($filename, strrpos($filename, '.') + 1);
     }
 }
+
+/* Takes a bunch of parameters and returns the first one that
+is equivalent to bool(true) */
+function eor() {
+    $args = func_get_args();
+    foreach($args as $arg) {
+        if($arg) return $arg;
+    }
+}
