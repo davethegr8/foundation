@@ -5,7 +5,7 @@
         "php" : "^5.5"
     },
     "autoload": {
-        "psr-4": {"UrbanOcto\\": "src/"},
+        "psr-4": {"Handy\\": "src/"},
         "files": [
             "src/bootstrap.php"
         ]
