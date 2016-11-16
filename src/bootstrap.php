@@ -21,3 +21,10 @@ function array_pluck($key, $array) {
         return $item[$key];
     }, $array);
 }
+
+/**
+ * Rounds to the nearest multiple of $interval. eg 4,8,12 etc
+ */
+function round_interval($num, $interval) {
+    return round($num / $interval) * $interval;
+}
