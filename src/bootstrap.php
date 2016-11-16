@@ -65,3 +65,35 @@ function randomCharString($length = 8, $chars = NULL) {
 
     return $output;
 }
+
+/**
+ * Downloads the contents of the file at $url. This is basically a replacement
+ * for file_get_contents($url) or fopen($url) on systems that have those functions
+ * disabled for http streams.
+ *
+ * @param $url The url to fetch
+ * @param $verifypeer [optional] The status of CURLOPT_SSL_VERIFYPEER. Set to false
+ * by default due to an empty on SSL encrypted sites when the client cannot verify
+ * the site's authenticity. Set to true for extra security.
+ * @return The contents of the file at $url
+ */
+function curl_request($url, $opts = array()) {
+    $default = array(
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_SSL_VERIFYPEER => false
+    );
+    foreach($opts as $key => $value) {
+        $default[$key] = $value;
+    }
+    $opts = $default;
+
+    $http = curl_init($url);
+    foreach($opts as $key => $value) {
+        curl_setopt($http, $key, $value);
+    }
+
+    $response = curl_exec($http);
+    curl_close($http);
+
+    return $response;
+}
