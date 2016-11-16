@@ -29,13 +29,6 @@ function round_interval($num, $interval) {
     return round($num / $interval) * $interval;
 }
 
-if(!function_exists('microtime_float')) {
-    function microtime_float()  {
-        list($usec, $sec) = explode(" ", microtime());
-        return ((float)$usec + (float)$sec);
-    }
-}
-
 //Takes a underscore string (lang_sname) and transforms it into a camelCase function (langSname)
 function camelCase($str) {
     return lcfirst(TitleCase($str));
