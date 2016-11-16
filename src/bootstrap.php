@@ -107,3 +107,9 @@ function curl_request($url, $opts = array()) {
 function create_handle($string) {
     return trim(preg_replace('/([^a-z0-9]+)/', '-', strtolower($string)), '-');
 }
+
+function file_extension($filename) {
+    if(strrpos($filename, '.') !== false) {
+        return substr($filename, strrpos($filename, '.') + 1);
+    }
+}
