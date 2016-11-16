@@ -15,3 +15,9 @@ function debug() {
     foreach(func_get_args() as $arg) print_r($arg);
     echo '</pre>';
 }
+
+function array_pluck($key, $array) {
+    return array_map(function ($item) use ($key) {
+        return $item[$key];
+    }, $array);
+}
