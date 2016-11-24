@@ -121,9 +121,10 @@ function file_extension($filename) {
 /* Takes a bunch of parameters and returns the first one that
 is equivalent to bool(true) */
 function eor() {
-    $args = func_get_args();
-    foreach($args as $arg) {
-        if($arg) return $arg;
+    foreach (func_get_args() as $arg) {
+        if ($arg) {
+            return $arg;
+        }
     }
 }
 
