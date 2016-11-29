@@ -1,6 +1,8 @@
-# handy-php
+# foundation
 
-Helpers and util stuff for php
+Helpers and utility stuff
+
+based greatly on https://laravel.com/docs/5.3/helpers
 
 
 

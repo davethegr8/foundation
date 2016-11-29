@@ -1,13 +1,13 @@
 {
-    "name": "davethegr8/handy-php",
+    "name": "hep/foundation",
     "description": "",
     "require": {
         "php" : "^5.5"
     },
     "autoload": {
-        "psr-4": {"Handy\\": "src/"},
+        "psr-4": {"Hep\\Foundation\\": "src/"},
         "files": [
-            "src/bootstrap.php"
+            "src/helpers.php"
         ]
     }
 }
