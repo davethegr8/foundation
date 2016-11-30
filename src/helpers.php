@@ -176,3 +176,8 @@ function getHTMLAttrs($tag) {
     preg_match_all('/(\w+)=\"(.+)\"/U', $tag, $matches);
     return array_combine($matches[1], $matches[2]);
 }
+
+function redirect($url, $code = null) {
+    header("Location: $url");
+    exit;
+}
