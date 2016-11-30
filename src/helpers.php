@@ -12,7 +12,7 @@ function any() {
 
 function debug() {
     echo '<pre>';
-    foreach(func_get_args() as $arg) print_r($arg);
+    foreach(func_get_args() as $arg) echo print_r($arg, true);
     echo '</pre>';
 }
 
@@ -81,11 +81,10 @@ function randomCharString($length = 8, $chars = NULL) {
  * the site's authenticity. Set to true for extra security.
  * @return The contents of the file at $url
  */
-function curl_request($url, $opts = array()) {
-    $default = array(
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_SSL_VERIFYPEER => false
-    );
+function curl_request($url, $opts = []) {
+    $default = [
+        CURLOPT_RETURNTRANSFER => true
+    ];
     foreach($opts as $key => $value) {
         $default[$key] = $value;
     }
@@ -118,15 +117,14 @@ function file_extension($filename) {
     }
 }
 
-function file_name($str) {
-    //finds the last thing like \w\.{extension}
-    preg_match('/(\w+)\.(\w+)$/', $str, $matches);
-    return $matches[0];
+function file_name($filename) {
+    return substr($filename, 0, strpos($filename, '.') ?: strlen($filename));
 }
 
 /* Takes a bunch of parameters and returns the first one that
 is equivalent to bool(true) */
-function eor() {
+function eor()
+{
     foreach (func_get_args() as $arg) {
         if ($arg) {
             return $arg;
@@ -145,15 +143,15 @@ function upper($str) {
 }
 
 
-function _checked($value, $check = NULL, $return = 'checked') {
-    return (($check !== NULL && $value == $check) || ($value && $check === NULL) ? $return : '');
+function _checked($value, $check = null, $return = 'checked') {
+    return (($check !== null && $value == $check) || ($value && $check === null) ? $return : '');
 }
 
-function _active($value, $check = NULL)  {
+function _active($value, $check = null)  {
     return _checked($value, $check, 'active');
 }
 
-function _selected($value, $check = NULL) {
+function _selected($value, $check = null) {
     return _checked($value, $check, 'selected');
 }
 
@@ -168,7 +166,7 @@ function file_upload($file, $destination) {
             $filename = md5($filename);
         }
 
-        $move = move_uploaded_file($file['tmp_name'], $destination.$filename.$extension);
+        move_uploaded_file($file['tmp_name'], $destination.$filename.$extension);
     }
 
     return $filename.$extension;
@@ -176,5 +174,5 @@ function file_upload($file, $destination) {
 
 function getHTMLAttrs($tag) {
     preg_match_all('/(\w+)=\"(.+)\"/U', $tag, $matches);
-    $attrs = array_combine($matches[1], $matches[2]);
+    return array_combine($matches[1], $matches[2]);
 }
