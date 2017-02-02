@@ -10,7 +10,7 @@ function any() {
     return false;
 }
 
-function debug() {
+function dump() {
     echo '<pre>';
     foreach(func_get_args() as $arg) echo print_r($arg, true);
     echo '</pre>';
