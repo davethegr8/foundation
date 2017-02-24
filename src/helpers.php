@@ -1,13 +1,12 @@
 <?php
 
+
 function all() {
-    foreach(func_get_args() as $arg) if(!boolval($arg)) return false;
-    return true;
+    return call_user_func_array(['Hep\Foundation\Logic', 'all'], func_get_args());
 }
 
 function any() {
-    foreach(func_get_args() as $arg) if(boolval($arg)) return true;
-    return false;
+    return call_user_func_array(['Hep\Foundation\Logic', 'any'], func_get_args());
 }
 
 function dump() {
@@ -47,7 +46,7 @@ function camelCase($str) {
 
 //Takes a underscore string (lang_sname) and transforms it into a TitleCase function (LangSname)
 function TitleCase($str) {
-    return str_replace(' ', '', ucwords(str_replace('_', ' ', strtolower($str)))); // Heh.
+    return str_replace(' ', '', ucwords(str_replace('_', ' ', lower($str)))); // Heh.
 }
 
 /**
@@ -121,8 +120,7 @@ function file_name($filename) {
     return substr($filename, 0, strpos($filename, '.') ?: strlen($filename));
 }
 
-/* Takes a bunch of parameters and returns the first one that
-is equivalent to bool(true) */
+/* Takes a bunch of parameters and returns the first one that is truthy */
 function eor()
 {
     foreach (func_get_args() as $arg) {
@@ -132,14 +130,12 @@ function eor()
     }
 }
 
-//pass by ref to save memory
 function lower($str) {
-    return strtolower($str);
+    return Str::lower($str);
 }
 
-//pass by ref to save memory
 function upper($str) {
-    return strtoupper($str);
+    return Str::upper($str);
 }
 
 
