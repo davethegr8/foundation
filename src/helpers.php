@@ -2,11 +2,13 @@
 
 
 function all() {
-    return call_user_func_array(['Hep\Foundation\Logic', 'all'], func_get_args());
+    foreach(func_get_args() as $arg) if(!boolval($arg)) return false;
+    return true;
 }
 
 function any() {
-    return call_user_func_array(['Hep\Foundation\Logic', 'any'], func_get_args());
+    foreach(func_get_args() as $arg) if(boolval($arg)) return true;
+    return false;
 }
 
 function dump() {
