@@ -1,6 +1,5 @@
 <?php
 
-
 function all() {
     foreach(func_get_args() as $arg) if(!boolval($arg)) return false;
     return true;
@@ -141,7 +140,6 @@ function upper($str) {
     return Str::upper($str);
 }
 
-
 function _checked($value, $check = null, $return = 'checked') {
     return (($check !== null && $value == $check) || ($value && $check === null) ? $return : '');
 }
@@ -177,7 +175,7 @@ function getHTMLAttrs($tag) {
 }
 
 function redirect($url, $code = null) {
-    header("Location: $url");
+    header("Location: $url", true, $code);
     exit;
 }
 
