@@ -57,6 +57,7 @@ function TitleCase($str) {
  * @return A string of length $length filled with random characters.
  */
 function randomCharString($length = 8, $chars = NULL) {
+    // todo change default length to be longer than 8
     $length = intval($length);
     $output = '';
 
@@ -188,4 +189,8 @@ function format_filesize($size) {
     }
 
     return round($size, 2).' '.$units[$i];
+}
+
+function now($format = 'Y-m-d H:i:s') {
+    return (new DateTime)->format($format);
 }
