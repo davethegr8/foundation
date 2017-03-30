@@ -10,15 +10,11 @@ class Flash {
     protected $messages = [];
 
     public function __construct() {
-        if(isset($_SESSION['flash']) && count($_SESSION['flash'])) {
-            $this->messages = $_SESSION['flash'];
-        }
+        $this->messages = $_SESSION['flash'];
     }
 
     public function __destruct() {
-        if(count($this->messages)) {
-            $_SESSION['flash'] = $this->messages;
-        }
+        $_SESSION['flash'] = $this->messages;
     }
 
     public function set($message, $type = 'info') {
