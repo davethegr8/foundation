@@ -1,8 +1,8 @@
 # hep/foundation
 
-Helpers and utility stuff
+Mostly dependecy free provider for reducing repetitive work.
 
-based greatly on 
+Based greatly on 
 
 - https://laravel.com/docs/5.3/helpers
 - https://github.com/laravel/framework
