@@ -7,14 +7,21 @@ class Flash {
     protected $group = '<div class="alert alert-{type}">{messages}</div>';
     protected $container = '<div class="messages">{html}</div>';
 
+    protected $keyname = 'flash';
     protected $messages = [];
 
-    public function __construct() {
-        $this->messages = $_SESSION['flash'];
+    public function __construct($keyname = null) {
+        if($keyname) {
+            $this->keyname = $keyname;
+        }
+
+        if(isset($_SESSION[$this->keyname])) {
+            $this->messages = $_SESSION[$this->keyname];
+        }
     }
 
     public function __destruct() {
-        $_SESSION['flash'] = $this->messages;
+        $_SESSION[$this->keyname] = $this->messages;
     }
 
     public function set($message, $type = 'info') {
