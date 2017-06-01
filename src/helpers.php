@@ -192,3 +192,11 @@ function format_filesize($size) {
 function now($format = 'Y-m-d H:i:s') {
     return (new DateTime)->format($format);
 }
+
+function starts_with($haystack, $needle) {
+    return Str::starts_with($haystack, $needle);
+}
+
+function ends_with($haystack, $needle) {
+    return Str::ends_with($haystack, $needle);
+}
