@@ -12,7 +12,14 @@ function any() {
 
 function dump() {
     echo '<pre>';
-    foreach(func_get_args() as $arg) echo print_r($arg, true);
+    foreach(func_get_args() as $arg) {
+        if(is_bool($arg) || $arg === null) {
+            echo var_export($arg, true);
+        }
+        else {
+            echo print_r($arg, true);
+        }
+    }
     echo '</pre>';
 }
 
