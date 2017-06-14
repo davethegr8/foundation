@@ -119,16 +119,6 @@ function create_handle($string) {
     return trim(preg_replace('/([^a-z0-9]+)/', '-', strtolower($string)), '-');
 }
 
-function file_extension($filename) {
-    if(strrpos($filename, '.') !== false) {
-        return substr($filename, strrpos($filename, '.') + 1);
-    }
-}
-
-function file_name($filename) {
-    return substr($filename, 0, strpos($filename, '.') ?: strlen($filename));
-}
-
 /* Takes a bunch of parameters and returns the first one that is truthy */
 function eor()
 {
@@ -157,23 +147,6 @@ function _active($value, $check = null)  {
 
 function _selected($value, $check = null) {
     return _checked($value, $check, 'selected');
-}
-
-function file_upload($file, $destination) {
-    $filename = '';
-
-    if(is_uploaded_file($file['tmp_name'])) {
-        $extension = '.'.file_extension($file['name']);
-        $filename = md5($file['name']);
-
-        while(file_exists($destination.$filename.$extension)) {
-            $filename = md5($filename);
-        }
-
-        move_uploaded_file($file['tmp_name'], $destination.$filename.$extension);
-    }
-
-    return $filename.$extension;
 }
 
 function getHTMLAttrs($tag) {
