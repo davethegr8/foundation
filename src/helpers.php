@@ -59,11 +59,10 @@ function TitleCase($str) {
 
 /**
  * Creates string composed of random characters from the set (a-zA-Z0-9). Most useful for passwords.
- * @param $length How long the string should be. Defaults to 8.
+ * @param $length How long the string should be. Defaults to 16.
  * @return A string of length $length filled with random characters.
  */
-function randomCharString($length = 8, $chars = NULL) {
-    // todo change default length to be longer than 8
+function randomCharString($length = 16, $chars = NULL) {
     $length = intval($length);
     $output = '';
 
