@@ -29,15 +29,7 @@ function array_pluck($key, $array) {
 }
 
 function array_collect($keys, $array) {
-    if(!is_array($keys)) {
-        return array_column($array, $keys);
-    }
-
-    return array_map(function ($item) use ($keys) {
-        return array_combine($keys, array_map(function ($key) use ($item) {
-            return array_key_exists($key, $item) ? $item[$key] : null;
-        }, $keys));
-    }, $array);
+    return Arr::collect($keys, $array);
 }
 
 /**
@@ -169,7 +161,6 @@ function starts_with($haystack, $needle) {
 function ends_with($haystack, $needle) {
     return Str::ends_with($haystack, $needle);
 }
-
 
 function file_extension($filename) {
     return File::extension($filename);
