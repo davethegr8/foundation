@@ -123,23 +123,19 @@ function upper($str) {
 }
 
 function _checked($value, $check = null, $return = 'checked') {
-    return any(
-        ($check !== null && $value == $check),
-        ($value && $check === null)
-    ) ? $return : '';
+    return HTML::checked($value, $check, $return);
 }
 
 function _active($value, $check = null)  {
-    return _checked($value, $check, 'active');
+    return HTML::checked($value, $check, 'active');
 }
 
 function _selected($value, $check = null) {
-    return _checked($value, $check, 'selected');
+    return HTML::checked($value, $check, 'selected');
 }
 
 function getHTMLAttrs($tag) {
-    preg_match_all('/(\w+)=\"(.+)\"/U', $tag, $matches);
-    return array_combine($matches[1], $matches[2]);
+    return HTML::getAttrs($tag);
 }
 
 function redirect($url, $code = null) {
