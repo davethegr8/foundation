@@ -100,14 +100,8 @@ function curl_request($url, $opts = []) {
     return $response;
 }
 
-/**
- * Removes special characters, lowers, and replaces ' '  with '-', used for
- * creating http url handles
- * @param $string The string you want to create an http handle from
- * @return The handle, with special characters removed.
- */
 function create_handle($string) {
-    return trim(preg_replace('/([^a-z0-9]+)/', '-', strtolower($string)), '-');
+    return Str::slugify($string);
 }
 
 /* Takes a bunch of parameters and returns the first one that is truthy */
