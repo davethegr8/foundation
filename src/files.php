@@ -26,3 +26,13 @@ function file_upload($file, $destination) {
 
     return $filename.$extension;
 }
+
+function format_filesize($size) {
+    $mod = 1024;
+    $units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB'];
+    for ($i = 0; $size > $mod; $i++) {
+        $size /= $mod;
+    }
+
+    return round($size, 2).' '.$units[$i];
+}
