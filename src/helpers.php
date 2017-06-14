@@ -129,7 +129,10 @@ function upper($str) {
 }
 
 function _checked($value, $check = null, $return = 'checked') {
-    return (($check !== null && $value == $check) || ($value && $check === null) ? $return : '');
+    return any(
+        ($check !== null && $value == $check),
+        ($value && $check === null)
+    ) ? $return : '';
 }
 
 function _active($value, $check = null)  {
