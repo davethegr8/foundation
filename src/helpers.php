@@ -138,9 +138,8 @@ function getHTMLAttrs($tag) {
     return HTML::getAttrs($tag);
 }
 
-function redirect($url, $code = null) {
-    header("Location: $url", true, $code);
-    exit;
+function redirect($url, $code = 302) {
+    Http::redirect($url, $code);
 }
 
 function now($format = 'Y-m-d H:i:s') {
