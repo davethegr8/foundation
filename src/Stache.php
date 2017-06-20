@@ -8,7 +8,7 @@ class Stache {
     // filters must have a single input and produce a single output
     // if you need something with more inputs, use currying
     protected $allowFilters = true;
-    protected $forbiddenFunctions = ['exec', 'shell_exec', 'passthru'];
+    protected $forbiddenFunctions = ['exec', 'passthru', 'shell_exec', 'system'];
 
     public function __construct() {}
 
