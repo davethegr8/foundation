@@ -7,11 +7,6 @@ use PHPUnit\Framework\TestCase;
 final class checkedTest extends TestCase
 {
 
-    public function testTrue()
-    {
-        $this->assertTrue(true);
-    }
-
     public function testValuesMatch()
     {
     //     $this->assertEquals(
@@ -20,10 +15,18 @@ final class checkedTest extends TestCase
     //     );
     }
 
-    public function testValuesDoNotMatch()
+    public function testValuesDontMatch()
     {
         $this->assertEmpty(
             _checked('yes', 'no')
+        );
+    }
+
+    public function testNullCheckValue()
+    {
+        $this->assertEquals(
+            _checked('yes'),
+            'checked'
         );
     }
 }
