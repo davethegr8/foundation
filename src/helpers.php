@@ -5,6 +5,9 @@ use Hep\Foundation\File;
 use Hep\Foundation\HTML;
 use Hep\Foundation\Http;
 
+/**
+ * @codeCoverageIgnore
+ */
 function is_cli() {
     return php_sapi_name() == "cli";
 }
@@ -20,9 +23,11 @@ function any() {
 }
 
 function dump() {
+    // @codeCoverageIgnoreStart
     if(!is_cli()) {
         echo '<pre>';
     }
+    // @codeCoverageIgnoreEnd
 
     foreach(func_get_args() as $arg) {
         if(is_bool($arg) || $arg === null) {
@@ -32,14 +37,18 @@ function dump() {
             echo print_r($arg, true);
         }
 
+        // @codeCoverageIgnoreStart
         if(is_cli()) {
             echo PHP_EOL;
         }
+        // @codeCoverageIgnoreEnd
     }
 
+    // @codeCoverageIgnoreStart
     if(!is_cli()) {
         echo '</pre>';
     }
+    // @codeCoverageIgnoreEnd
 }
 
 function array_collect($keys, $array) {

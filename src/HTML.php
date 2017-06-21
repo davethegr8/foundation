@@ -20,11 +20,11 @@ class HTML {
     }
 
     function active($value, $check = null)  {
-        return _checked($value, $check, 'active');
+        return self::checked($value, $check, 'active');
     }
 
     function selected($value, $check = null) {
-        return _checked($value, $check, 'selected');
+        return self::checked($value, $check, 'selected');
     }
 
 }

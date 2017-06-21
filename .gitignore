@@ -2,3 +2,4 @@ vendor
 composer.lock
 test.php
 .DS_Store
+docs/coverage
