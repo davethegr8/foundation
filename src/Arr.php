@@ -15,15 +15,7 @@ class Arr {
         }, $array);
     }
 
-    function remove($array, $values) {
-        $values = array_wrap($values);
-
-        foreach($array as $key => $value) {
-            if(in_array($value, $values)) {
-                unset($array[$key]);
-            }
-        }
-
-        return array_values($array);
+    function remove(array $array, $values) {
+        return array_diff($array, array_wrap($values));
     }
 }

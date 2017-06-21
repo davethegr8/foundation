@@ -41,7 +41,7 @@ class Stache {
                 $value = $context[$key];
 
                 if($this->allowTransforms) {
-                    $transforms = array_remove($transforms, $this->forbiddenFunctions);
+                    $transforms = array_diff($transforms, $this->forbiddenFunctions);
                     foreach($transforms as $transform) {
                         if(is_string($value)) {
                             $value = $transform($value);
