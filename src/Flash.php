@@ -3,6 +3,7 @@
 namespace Hep\Foundation;
 
 class Flash {
+    // todo: use illuminate\support\messagebag
     protected $message = '<p class="message">{message}</p>';
     protected $group = '<div class="alert alert-{type}">{messages}</div>';
     protected $container = '<div class="messages">{html}</div>';
