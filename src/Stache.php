@@ -27,7 +27,7 @@ class Stache {
 
     // context should allow for multilevel arrays: { parent.child }
     public function render($template, $context, $replaceEmpty = false) {
-        $context = flatten($context);
+        $context = array_dot($context);
 
         preg_match_all('/\{.*\}/sU', $template, $matches);
         $chunks = array_unique($matches[0]);

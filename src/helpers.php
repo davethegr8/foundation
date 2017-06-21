@@ -1,6 +1,13 @@
 <?php
 
-namespace Hep\Foundation;
+use Hep\Foundation\Arr;
+use Hep\Foundation\File;
+use Hep\Foundation\HTML;
+use Hep\Foundation\Http;
+
+function is_cli() {
+    return php_sapi_name() == "cli";
+}
 
 function all() {
     foreach(func_get_args() as $arg) if(!boolval($arg)) return false;
@@ -13,7 +20,10 @@ function any() {
 }
 
 function dump() {
-    echo '<pre>';
+    if(!is_cli()) {
+        echo '<pre>';
+    }
+
     foreach(func_get_args() as $arg) {
         if(is_bool($arg) || $arg === null) {
             echo var_export($arg, true);
@@ -21,13 +31,15 @@ function dump() {
         else {
             echo print_r($arg, true);
         }
-    }
-    echo '</pre>';
-}
 
-function array_pluck($key, $array) {
-    trigger_error("array_pluck is deprecated - use array_column instead", E_USER_DEPRECATED);
-    return array_column($array, $key);
+        if(is_cli()) {
+            echo PHP_EOL;
+        }
+    }
+
+    if(!is_cli()) {
+        echo '</pre>';
+    }
 }
 
 function array_collect($keys, $array) {
@@ -39,36 +51,6 @@ function array_collect($keys, $array) {
  */
 function round_interval($num, $interval) {
     return round($num / $interval) * $interval;
-}
-
-//Takes a underscore string (lang_sname) and transforms it into a camelCase function (langSname)
-function camelCase($str) {
-    return lcfirst(TitleCase($str));
-}
-
-//Takes a underscore string (lang_sname) and transforms it into a TitleCase function (LangSname)
-function TitleCase($str) {
-    return str_replace(' ', '', ucwords(str_replace('_', ' ', lower($str)))); // Heh.
-}
-
-/**
- * Creates string composed of random characters from the set (a-zA-Z0-9). Most useful for passwords.
- * @param $length How long the string should be. Defaults to 16.
- * @return A string of length $length filled with random characters.
- */
-function randomCharString($length = 16, $chars = NULL) {
-    $length = intval($length);
-    $output = '';
-
-    if($chars === NULL) {
-        $chars = array_merge(range(0, 9), range("a", "z"), range("A", "Z"));
-    }
-
-    while($length-- > 0) {
-        $output .= $chars[rand(0, count($chars) - 1)];
-    }
-
-    return $output;
 }
 
 /**
@@ -102,10 +84,6 @@ function curl_request($url, $opts = []) {
     return $response;
 }
 
-function create_handle($string) {
-    return Str::slugify($string);
-}
-
 /* Takes a bunch of parameters and returns the first one that is truthy */
 function eor()
 {
@@ -117,11 +95,11 @@ function eor()
 }
 
 function lower($str) {
-    return Str::lower($str);
+    return \Illuminate\Support\Str::lower($str);
 }
 
 function upper($str) {
-    return Str::upper($str);
+    return \Illuminate\Support\Str::upper($str);
 }
 
 function _checked($value, $check = null, $return = 'checked') {
@@ -148,14 +126,6 @@ function now($format = 'Y-m-d H:i:s') {
     return (new DateTime)->format($format);
 }
 
-function starts_with($haystack, $needle) {
-    return Str::starts_with($haystack, $needle);
-}
-
-function ends_with($haystack, $needle) {
-    return Str::ends_with($haystack, $needle);
-}
-
 function file_extension($filename) {
     return File::extension($filename);
 }
@@ -170,8 +140,4 @@ function file_upload($file, $destination) {
 
 function format_filesize($size) {
     return File::formatSize($size);
-}
-
-function flatten($array, $joiner = '.', $prepend = '') {
-    return Arr::flatten($array, $joiner, $prepend);
 }

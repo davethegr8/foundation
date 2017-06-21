@@ -4,6 +4,20 @@ include '../vendor/autoload.php';
 
 use Hep\Foundation\Stache;
 
+dump([1], new \stdClass);
+dump(true, false, null);
+
+assert(all(true, [1], 1) == true);
+assert(any(false, [], 1) == true);
+
+assert(all(false, [0], 0) == false);
+assert(any(false, false && true) == false);
+
+assert(_checked('yes', 'yes') == 'checked');
+assert(_checked('yes', 'no') == '');
+
+
+
 $engine = new Stache();
 
 assert($engine->render('{ empty }', []) === '{ empty }');
