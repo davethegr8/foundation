@@ -14,4 +14,19 @@ class Arr {
             }, $keys));
         }, $array);
     }
+
+    function flatten($array, $joiner = '.', $prepend = '') {
+        $results = [];
+        foreach ($array as $key => $value) {
+            if (is_array($value) && ! empty($value)) {
+                $results = array_merge(
+                    $results,
+                    static::flatten($value, $joiner, $prepend.$key.$joiner)
+                );
+            } else {
+                $results[$prepend.$key] = $value;
+            }
+        }
+        return $results;
+    }
 }

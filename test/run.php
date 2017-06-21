@@ -1,8 +1,8 @@
 <?php
 
-use Hep\Foundation\Stache;
+include '../vendor/autoload.php';
 
-include('../vendor/autoload.php');
+use Hep\Foundation\Stache;
 
 $engine = new Stache();
 // $engine->allowTransforms(false);

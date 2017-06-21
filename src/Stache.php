@@ -27,7 +27,7 @@ class Stache {
 
     // context should allow for multilevel arrays: { parent.child }
     public function render($template, $context, $replaceEmpty = false) {
-        $context = $this->flatten($context);
+        $context = flatten($context);
 
         preg_match_all('/\{.*\}/sU', $template, $matches);
         $chunks = array_unique($matches[0]);
@@ -60,20 +60,5 @@ class Stache {
         }
 
         return $template;
-    }
-
-    static public function flatten($array, $prepend = '') {
-        $results = [];
-        foreach ($array as $key => $value) {
-            if (is_array($value) && ! empty($value)) {
-                $results = array_merge(
-                    $results,
-                    static::flatten($value, $prepend.$key.'.')
-                );
-            } else {
-                $results[$prepend.$key] = $value;
-            }
-        }
-        return $results;
     }
 }

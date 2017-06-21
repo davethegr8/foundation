@@ -1,5 +1,7 @@
 <?php
 
+namespace Hep\Foundation;
+
 function all() {
     foreach(func_get_args() as $arg) if(!boolval($arg)) return false;
     return true;
@@ -168,4 +170,8 @@ function file_upload($file, $destination) {
 
 function format_filesize($size) {
     return File::formatSize($size);
+}
+
+function flatten($array, $joiner = '.', $prepend = '') {
+    return Arr::flatten($array, $joiner, $prepend);
 }
