@@ -14,4 +14,16 @@ class Arr {
             }, $keys));
         }, $array);
     }
+
+    function remove($array, $values) {
+        $values = array_wrap($values);
+
+        foreach($array as $key => $value) {
+            if(in_array($value, $values)) {
+                unset($array[$key]);
+            }
+        }
+
+        return array_values($array);
+    }
 }

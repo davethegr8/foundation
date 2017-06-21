@@ -46,6 +46,10 @@ function array_collect($keys, $array) {
     return Arr::collect($keys, $array);
 }
 
+function array_remove($array, $values) {
+    return Arr::remove($array, $values);
+}
+
 /**
  * Rounds to the nearest multiple of $interval. eg 4,8,12 etc
  */
