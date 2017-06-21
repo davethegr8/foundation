@@ -5,22 +5,75 @@ namespace Hep\Foundation;
 // it's like mustache... but smaller
 class Stache {
 
-    // filters must have a single input and produce a single output
+    // transforms must have a single input and produce a single output
     // if you need something with more inputs, use currying
-    protected $allowFilters = true;
-    protected $forbiddenFunctions = ['exec', 'passthru', 'shell_exec', 'system'];
+    protected $allowTransforms = true;
+    protected $forbiddenFunctions = [
+        'exec',
+        'passthru',
+        'shell_exec',
+        'system'
+    ];
 
     public function __construct() {}
 
-    public function allowFilters($value = null) {
+    public function allowTransforms($value = null) {
         if(is_bool($value)) {
-            $this->allowFilters = $value;
+            $this->allowTransforms = $value;
         }
 
-        return $this->allowFilters;
+        return $this->allowTransforms;
     }
 
     // context should allow for multilevel arrays: { parent.child }
-    public function render($template, $context, $replaceEmpty = false) {}
+    public function render($template, $context, $replaceEmpty = false) {
+        $context = $this->flatten($context);
 
+        preg_match_all('/\{.*\}/sU', $template, $matches);
+        $chunks = array_unique($matches[0]);
+
+        foreach($chunks as $original) {
+            $chunk = substr($original, 1, -1);
+            $transforms = array_map('trim', explode('|', $chunk));
+            $key = array_shift($transforms);
+
+            if(array_key_exists($key, $context)) {
+                $value = $context[$key];
+
+                if($this->allowTransforms) {
+                    foreach($transforms as $transform) {
+                        if(in_array($transform, $this->forbiddenFunctions)) {
+                            continue;
+                        }
+
+                        if(is_string($value)) {
+                            $value = $transform($value);
+                        }
+                    }
+                }
+
+                $template = str_replace($original, $value, $template);
+            }
+            elseif($replaceEmpty) {
+                $template = str_replace($original, '', $template);
+            }
+        }
+
+        return $template;
+    }
+
+    static public function flatten($array, $prepend = '') {
+        $results = [];
+        foreach ($array as $key => $value) {
+            if (is_array($value) && ! empty($value)) {
+                $results = array_merge(
+                    $results,
+                    static::flatten($value, $prepend.$key.'.')
+                );
+            } else {
+                $results[$prepend.$key] = $value;
+            }
+        }
+        return $results;
+    }
 }
