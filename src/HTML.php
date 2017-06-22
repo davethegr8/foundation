@@ -12,18 +12,18 @@ class HTML {
         return array_combine($matches[1], $matches[2]);
     }
 
-    function checked($value, $check = null, $return = 'checked') {
+    static function checked($value, $check = null, $return = 'checked') {
         return any(
             ($check !== null && $value == $check),
             ($value && $check === null)
         ) ? $return : '';
     }
 
-    function active($value, $check = null)  {
+    static function active($value, $check = null)  {
         return self::checked($value, $check, 'active');
     }
 
-    function selected($value, $check = null) {
+    static function selected($value, $check = null) {
         return self::checked($value, $check, 'selected');
     }
 

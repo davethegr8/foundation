@@ -115,16 +115,16 @@ function upper($str) {
     return \Illuminate\Support\Str::upper($str);
 }
 
-function _checked($value, $check = null, $return = 'checked') {
+function checked($value, $check = null, $return = 'checked') {
     return HTML::checked($value, $check, $return);
 }
 
-function _active($value, $check = null)  {
-    return HTML::checked($value, $check, 'active');
+function active($value, $check = null)  {
+    return HTML::active($value, $check);
 }
 
-function _selected($value, $check = null) {
-    return HTML::checked($value, $check, 'selected');
+function selected($value, $check = null) {
+    return HTML::selected($value, $check);
 }
 
 function getHTMLAttrs($tag) {

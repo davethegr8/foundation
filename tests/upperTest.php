@@ -5,11 +5,11 @@ use PHPUnit\Framework\TestCase;
 
 /**
  */
-class lowerTest extends TestCase
+class upperTest extends TestCase
 {
     public function testLowerCase()
     {
-        $this->assertEquals(lower('LOWER'), 'lower');
+        $this->assertEquals(upper('upper'), 'UPPER');
     }
 }
 

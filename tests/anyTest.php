@@ -5,7 +5,7 @@ use PHPUnit\Framework\TestCase;
 
 /**
  */
-final class anyTest extends TestCase
+class anyTest extends TestCase
 {
     public function testHasFalseValues()
     {

@@ -5,7 +5,7 @@ use PHPUnit\Framework\TestCase;
 
 /**
  */
-final class allTest extends TestCase
+class allTest extends TestCase
 {
     public function testHasOneFalseValue()
     {
