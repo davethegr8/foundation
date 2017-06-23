@@ -44,18 +44,24 @@ function getCoverageValue($report) {
 
 function postJSON($url, $data) {
     $data_string = json_encode($data);
+    echo $url, $data_string;
 
     $ch = curl_init($url);
-    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+
+    curl_setopt($ch, CURLOPT_POST, true);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
         'User-Agent: davethegr8/code-coverage',
+        'Authorization: token '.getenv('GITHUB_TOKEN'),
+        'Accept: application/vnd.github.v3.full+json',
         'Content-Type: application/json',
-        'Content-Length: ' . strlen($data_string))
-    );
+        'Content-Length: ' . strlen($data_string)
+    ]);
 
     $result = curl_exec($ch);
     curl_close($ch);
+
     return $result;
 }
