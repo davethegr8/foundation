@@ -49,6 +49,7 @@ function postJSON($url, $data) {
     curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+        'User-Agent: davethegr8/code-coverage',
         'Content-Type: application/json',
         'Content-Length: ' . strlen($data_string))
     );
