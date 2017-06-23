@@ -6,4 +6,5 @@ test:
   override:
     - composer test
     - cat docs/coverage/coverage.txt
+    - cp docs/coverage/coverage.txt $CIRCLE_ARTIFACTS
 
