@@ -3,7 +3,7 @@
 namespace Hep\Foundation;
 
 class Arr {
-    function collect($keys, $array) {
+    static function collect($keys, $array) {
         if(!is_array($keys)) {
             return array_column($array, $keys);
         }
@@ -15,7 +15,7 @@ class Arr {
         }, $array);
     }
 
-    function remove(array $array, $values) {
+    static function remove(array $array, $values) {
         return array_diff($array, array_wrap($values));
     }
 }
