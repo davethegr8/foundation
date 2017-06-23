@@ -44,7 +44,6 @@ function getCoverageValue($report) {
 
 function postJSON($url, $data) {
     $data_string = json_encode($data);
-    echo $url, $data_string;
 
     $ch = curl_init($url);
 
