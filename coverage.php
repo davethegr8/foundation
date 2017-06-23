@@ -1,7 +1,7 @@
 #!/usr/bin/env php
 <?php
 
-$statusURL = 'https://api.github.com/v3/repos/'.getenv('CIRCLE_PROJECT_USERNAME').'/'.getenv('CIRCLE_PROJECT_REPONAME').'/statuses/'.getenv('CIRCLE_SHA1');
+$statusURL = 'https://api.github.com/repos/'.getenv('CIRCLE_PROJECT_USERNAME').'/'.getenv('CIRCLE_PROJECT_REPONAME').'/statuses/'.getenv('CIRCLE_SHA1');
 echo $statusURL, PHP_EOL;
 $statusData = [
     'state' => 'pending',
