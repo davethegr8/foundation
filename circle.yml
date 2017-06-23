@@ -6,5 +6,6 @@ test:
   override:
     - composer test
     - cat docs/coverage/coverage.txt
+    - curl https://circleci.com/api/v1.1/project/github/davethegr8/foundation/latest/artifacts?circle-token=$CI_TOKEN&branch=circleci-v1&filter=successful > artifacts.json
     - cp docs/coverage/coverage.txt $CIRCLE_ARTIFACTS
 
