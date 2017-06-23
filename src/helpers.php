@@ -154,3 +154,15 @@ function file_upload($file, $destination) {
 function format_filesize($size) {
     return File::formatSize($size);
 }
+
+function text_only($string) {
+    $string = preg_replace('/<br(.*)>|<ul(.*)>|<ol(.*)>|<\/p>|<\/h[1-6]>|<\/div>|<hr(.*)>/Ui', "\n", $string);
+
+    $string = preg_replace('/<li(.*)>(.*)<\/li>/Ui', "* $2\n", $string);
+    return strip_tags($string);
+}
+
+
+function dateFormat($date, $format = 'n/j/y', $offset = '') {
+    return (strtotime($date) !== false ? date($format, strtotime($date.' '.$offset)) : '');
+}
