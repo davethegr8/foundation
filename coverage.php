@@ -2,7 +2,7 @@
 <?php
 
 $statusURL = 'https://api.github.com/repos/'.getenv('CIRCLE_PROJECT_USERNAME').'/'.getenv('CIRCLE_PROJECT_REPONAME').'/statuses/'.getenv('CIRCLE_SHA1');
-echo $statusURL, PHP_EOL;
+// echo $statusURL, PHP_EOL;
 $statusData = [
     'state' => 'pending',
     'target_url' => getenv('CIRCLE_BUILD_URL'),
@@ -10,7 +10,7 @@ $statusData = [
     'context' => 'davethegr8/code-coverage'
 ];
 
-echo postJSON($statusURL, $statusData), PHP_EOL;
+postJSON($statusURL, $statusData);
 
 $artifacts = shell_exec('curl -s https://circleci.com/api/v1.1/project/github/davethegr8/foundation/latest/artifacts?circle-token='.getenv('CI_TOKEN').'&branch=master&filter=successful');
 
@@ -32,9 +32,9 @@ else {
     $statusData['state'] = 'error';
 }
 
-echo postJSON($statusURL, $statusData), PHP_EOL;
+postJSON($statusURL, $statusData);
 
-// echo json_encode($data);
+echo json_encode($data);
 
 function getCoverageValue($report) {
     $lines = explode("\n", file_get_contents($report));
