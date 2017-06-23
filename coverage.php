@@ -6,10 +6,10 @@ $statusData = [
     'state' => 'pending',
     'target_url' => getenv('CIRCLE_BUILD_URL'),
     'description' => '',
-    'context' => 'code-coverage'
+    'context' => 'davethegr8/code-coverage'
 ];
 
-postJSON($statusURL, $statusData);
+echo postJSON($statusURL, $statusData);
 
 $artifacts = shell_exec('curl -s https://circleci.com/api/v1.1/project/github/davethegr8/foundation/latest/artifacts?circle-token='.getenv('CI_TOKEN').'&branch=master&filter=successful');
 
@@ -31,9 +31,9 @@ else {
     $statusData['state'] = 'error';
 }
 
-postJSON($statusURL, $statusData);
+echo postJSON($statusURL, $statusData);
 
-echo json_encode($data);
+// echo json_encode($data);
 
 function getCoverageValue($report) {
     $lines = explode("\n", file_get_contents($report));
