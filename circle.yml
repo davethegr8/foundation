@@ -2,10 +2,15 @@ machine:
   php:
     version: 5.6.22
 
+# dependencies:
+#   pre:
+#     - apt-get install jq
+
 test:
   override:
     - composer test
+  post:
     - cat docs/coverage/coverage.txt
-    - curl https://circleci.com/api/v1.1/project/github/davethegr8/foundation/latest/artifacts?circle-token=$CI_TOKEN&branch=circleci-v1&filter=successful > artifacts.json
+    - ./coverage.php
     - cp docs/coverage/coverage.txt $CIRCLE_ARTIFACTS
 
