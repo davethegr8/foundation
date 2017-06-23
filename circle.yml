@@ -5,4 +5,5 @@ machine:
 test:
   override:
     - composer test
+    - cat docs/coverage/coverage.txt
 
