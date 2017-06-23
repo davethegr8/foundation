@@ -2,6 +2,7 @@
 <?php
 
 $statusURL = 'https://api.github.com/v3/repos/'.getenv('CIRCLE_PROJECT_USERNAME').'/'.getenv('CIRCLE_PROJECT_REPONAME').'/statuses/'.getenv('CIRCLE_SHA1');
+echo $statusURL, PHP_EOL;
 $statusData = [
     'state' => 'pending',
     'target_url' => getenv('CIRCLE_BUILD_URL'),
@@ -9,7 +10,7 @@ $statusData = [
     'context' => 'davethegr8/code-coverage'
 ];
 
-echo postJSON($statusURL, $statusData);
+echo postJSON($statusURL, $statusData), PHP_EOL;
 
 $artifacts = shell_exec('curl -s https://circleci.com/api/v1.1/project/github/davethegr8/foundation/latest/artifacts?circle-token='.getenv('CI_TOKEN').'&branch=master&filter=successful');
 
@@ -31,7 +32,7 @@ else {
     $statusData['state'] = 'error';
 }
 
-echo postJSON($statusURL, $statusData);
+echo postJSON($statusURL, $statusData), PHP_EOL;
 
 // echo json_encode($data);
 
