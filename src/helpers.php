@@ -77,7 +77,7 @@ function round_interval($num, $interval) {
  * the site's authenticity. Set to true for extra security.
  * @return The contents of the file at $url
  */
-function curl_request($url, $opts = []) {
+function curl_request($url, $opts = [], $headers = []) {
     $default = [
         CURLOPT_RETURNTRANSFER => true
     ];
@@ -89,6 +89,10 @@ function curl_request($url, $opts = []) {
     $http = curl_init($url);
     foreach($opts as $key => $value) {
         curl_setopt($http, $key, $value);
+    }
+
+    if(count($headers)) {
+        curl_setopt($http, CURLOPT_HTTPHEADER, $headers);
     }
 
     $response = curl_exec($http);
