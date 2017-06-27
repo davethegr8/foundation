@@ -97,6 +97,22 @@ function curl_request($url, $opts = []) {
     return $response;
 }
 
+function postJSON($url, $data) {
+    $data = json_encode($data);
+
+    $opts = [
+        CURLOPT_POST => true,
+        CURLOPT_POSTFIELDS => $data,
+    ];
+
+    $headers = [
+        'Content-Type: application/json',
+        'Content-Length: '.strlen($data)
+    ];
+
+    return curl_request($url, $opts, $headers);
+}
+
 /* Takes a bunch of parameters and returns the first one that is truthy */
 function eor()
 {
