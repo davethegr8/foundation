@@ -77,7 +77,7 @@ function round_interval($num, $interval) {
  * the site's authenticity. Set to true for extra security.
  * @return The contents of the file at $url
  */
-function curl_request($url, $opts = []) {
+function curl_request($url, $opts = [], $headers = []) {
     $default = [
         CURLOPT_RETURNTRANSFER => true
     ];
@@ -91,10 +91,30 @@ function curl_request($url, $opts = []) {
         curl_setopt($http, $key, $value);
     }
 
+    if(count($headers)) {
+        curl_setopt($http, CURLOPT_HTTPHEADER, $headers);
+    }
+
     $response = curl_exec($http);
     curl_close($http);
 
     return $response;
+}
+
+function postJSON($url, $data) {
+    $data = json_encode($data);
+
+    $opts = [
+        CURLOPT_POST => true,
+        CURLOPT_POSTFIELDS => $data,
+    ];
+
+    $headers = [
+        'Content-Type: application/json',
+        'Content-Length: '.strlen($data)
+    ];
+
+    return curl_request($url, $opts, $headers);
 }
 
 /* Takes a bunch of parameters and returns the first one that is truthy */
