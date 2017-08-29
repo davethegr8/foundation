@@ -186,3 +186,30 @@ function text_only($string) {
 function dateFormat($date, $format = 'n/j/y', $offset = '') {
     return (strtotime($date) !== false ? date($format, strtotime($date.' '.$offset)) : '');
 }
+
+function array_extend() {
+    $extended = [];
+    $args = func_get_args();
+
+    if(empty($args)) {
+        return $extended;
+    }
+
+    foreach($args as $i => $arg) {
+        if(!is_array($arg)) {
+            continue;
+        }
+
+        foreach($arg as $key => $value) {
+            if(is_array($value)) {
+                $extended[$key] = array_extend($extended[$key], $value);
+            }
+            else {
+                $extended[$key] = $value;
+            }
+        }
+    }
+
+    return $extended;
+}
+
