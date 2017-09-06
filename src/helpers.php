@@ -195,7 +195,7 @@ function array_extend() {
         return $extended;
     }
 
-    foreach($args as $i => $arg) {
+    foreach($args as $arg) {
         if(!is_array($arg)) {
             continue;
         }

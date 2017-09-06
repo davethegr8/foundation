@@ -106,7 +106,7 @@ class Flash {
 
     public function render($message, $data) {
         foreach($data as $key => $value) {
-            $message = str_replace('{' . $key . '}', $data[$key], $message);
+            $message = str_replace('{' . $key . '}', $value, $message);
         }
         return $message;
     }
