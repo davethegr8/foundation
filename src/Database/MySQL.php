@@ -4,6 +4,8 @@ namespace Hep\Foundation\Database;
 
 use Hep\Foundation\Database;
 
+use PDO;
+
 class MySQL extends Database {
 
     public function __construct($host, $user = '', $pass = '', $name = '', array $options = []) {
