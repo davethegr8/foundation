@@ -6,24 +6,15 @@ use Hep\Foundation\Database;
 
 class MySQL extends Database {
 
-	public function __construct(array $dsn = [], $username = '', $password = '', array $options = []) {
-		$defaults = [
-			'host' => null,
-			'port' => null,
-			'dbname' => null,
-			'unix_socket' => null,
-			'charset' => null
-		];
+    public function __construct($host, $user = '', $pass = '', $name = '', array $options = []) {
+        $defaults = [
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+        ];
 
-		$dsn = array_replace_recursive($defaults, $dsn);
-		$dsn = array_filter($dsn);
+        $options = array_extend($defaults, $options);
 
-		$dsn = array_map(function ($key, $value) {
-			return $key.'='.$value;
-		}, array_keys($dsn), $dsn);
-
-		$dsn = 'mysql:'.implode(';', $dsn);
-
-		parent::__construct($dsn, $username, $password, $options);
-	}
+        $dsn = 'mysql:host='.$host.';dbname='.$name.';charset=utf8';
+        parent::__construct($dsn, $user, $pass, $options);
+    }
 }
