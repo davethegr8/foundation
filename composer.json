@@ -2,7 +2,6 @@
     "name": "hep/foundation",
     "description": "",
     "require": {
-        "php" : "^5.6",
         "illuminate/support": "^5.4"
     },
     "require-dev": {
