@@ -16,7 +16,7 @@
 
 version: 2
 jobs:
-  test:
+  build:
     docker:
       - image: circleci/php:7.0-cli-browsers
     steps:
