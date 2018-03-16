@@ -25,9 +25,6 @@ jobs:
       - run: composer test
       - run: cat docs/coverage/coverage.txt
       - run: ./coverage.php
-      - run:
-          name: Creating Dummy Artifacts
-          command: mkdir /coverage;
       - store_artifacts:
           path: docs/coverage/coverage.txt
           destination: coverage.txt
