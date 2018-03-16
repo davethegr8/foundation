@@ -21,6 +21,15 @@ jobs:
       - image: circleci/php:7.0-cli-browsers
     steps:
       - checkout
-      - run: echo "A first hello"
       - run: composer install
+  test:
+    docker:
+      - image: circleci/php:7.0-cli-browsers
+    steps:
       - run: composer test
+workflows:
+  version: 2
+  go:
+    jobs:
+      - build
+      - test
