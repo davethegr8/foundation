@@ -22,10 +22,6 @@ jobs:
     steps:
       - checkout
       - run: composer install
-  test:
-    docker:
-      - image: circleci/php:7.0-cli-browsers
-    steps:
       - run: composer test
       - run: cat docs/coverage/coverage.txt
       - run: ./coverage.php
@@ -35,11 +31,3 @@ jobs:
       - store_artifacts:
           path: docs/coverage/coverage.txt
           destination: coverage.txt
-workflows:
-  version: 2
-  go:
-    jobs:
-      - build
-      - test:
-          requires:
-            - build
