@@ -27,9 +27,19 @@ jobs:
       - image: circleci/php:7.0-cli-browsers
     steps:
       - run: composer test
+      - run: cat docs/coverage/coverage.txt
+      - run: ./coverage.php
+      - run:
+          name: Creating Dummy Artifacts
+          command: mkdir /coverage;
+      - store_artifacts:
+          path: docs/coverage/coverage.txt
+          destination: coverage.txt
 workflows:
   version: 2
   go:
     jobs:
       - build
-      - test
+      - test:
+          requires:
+            - build
