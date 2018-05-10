@@ -16,8 +16,23 @@ class Arr {
     }
 
     static function remove(array $array, $values) {
-        return array_diff($array, array_wrap($values));
+        if (!is_array($values)) {
+            $values = [$values];
+        }
+        return array_diff($array, $values);
     }
 
+    public static function dot($array, $prepend = '') {
+        $results = [];
 
+        foreach ($array as $key => $value) {
+            if (is_array($value) && ! empty($value)) {
+                $results = array_merge($results, static::dot($value, $prepend.$key.'.'));
+            } else {
+                $results[$prepend.$key] = $value;
+            }
+        }
+
+        return $results;
+    }
 }
