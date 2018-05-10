@@ -4,6 +4,7 @@ use Hep\Foundation\Arr;
 use Hep\Foundation\File;
 use Hep\Foundation\HTML;
 use Hep\Foundation\Http;
+use Hep\Foundation\Str;
 
 /**
  * @codeCoverageIgnore
@@ -128,11 +129,11 @@ function eor()
 }
 
 function lower($str) {
-    return \Illuminate\Support\Str::lower($str);
+    return Str::lower($str);
 }
 
 function upper($str) {
-    return \Illuminate\Support\Str::upper($str);
+    return Str::upper($str);
 }
 
 function checked($value, $check = null, $return = 'checked') {
@@ -213,3 +214,17 @@ function array_extend() {
     return $extended;
 }
 
+function interpolate($message, array $context = array())
+{
+    // build a replacement array with braces around the context keys
+    $replace = array();
+    foreach ($context as $key => $val) {
+        // check that the value can be casted to string
+        if (!is_array($val) && (!is_object($val) || method_exists($val, '__toString'))) {
+            $replace['{' . $key . '}'] = $val;
+        }
+    }
+
+    // interpolate replacement values into the message and return
+    return strtr($message, $replace);
+}

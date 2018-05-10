@@ -4,6 +4,7 @@
 use PHPUnit\Framework\TestCase;
 
 use Hep\Foundation\Stache;
+use Hep\Foundation\Str;
 
 /**
  */
@@ -48,7 +49,7 @@ class StacheTest extends TestCase
     public function testForbiddenFunctions() {
         $this->engine->allowTransforms(true);
 
-        $this->assertEquals($this->engine->render('{test | exec | upper | passthru | shell_exec | system }', ['test' => 'success']), 'SUCCESS');
+        $this->assertEquals($this->engine->render('{test | exec | upper | passthru | shell_exec | system}', ['test' => 'success']), 'SUCCESS');
 
         $this->engine->allowTransforms(false);
     }

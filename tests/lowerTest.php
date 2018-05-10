@@ -3,6 +3,8 @@
 
 use PHPUnit\Framework\TestCase;
 
+use Hep\Foundation\Str;
+
 /**
  */
 class lowerTest extends TestCase

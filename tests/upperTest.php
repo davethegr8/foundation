@@ -3,6 +3,8 @@
 
 use PHPUnit\Framework\TestCase;
 
+use Hep\Foundation\Str;
+
 /**
  */
 class upperTest extends TestCase
