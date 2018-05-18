@@ -1,5 +1,7 @@
 <?php
 
+// based on https://book.cakephp.org/2.0/en/core-libraries/components/access-control-lists.html
+
 namespace Hep\Foundation;
 
 class ACL
