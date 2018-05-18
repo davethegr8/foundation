@@ -65,9 +65,6 @@ foreach ($matrix as $role => $resources) {
 
         $message = "expected isAllowed($role, $resource) to be $expect but got $result";
 
-        assert(
-            $result == $expect,
-            new Exception($message)
-        );
+        assert($result == $expect, new Exception($message));
     }
 }
