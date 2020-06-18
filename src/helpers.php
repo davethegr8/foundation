@@ -24,7 +24,7 @@ function any() {
     return false;
 }
 
-function dump() {
+function debug() {
     // @codeCoverageIgnoreStart
     if(!is_cli()) {
         echo '<pre>';
