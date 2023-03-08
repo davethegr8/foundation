@@ -23,25 +23,29 @@ class Database extends PDO {
         return array_shift($row);
     }
 
-    public function insert($table, $data = []) {
+    public function insert($table, $data)
+    {
         $sql = $this->getInsertSQL($table, $data);
         $statement = $this->prepare($sql);
         return $statement->execute($data);
     }
 
-    public function update($table, $data = [], $where) {
+    public function update($table, $data, $where)
+    {
         $sql = $this->getUpdateSQL($table, $data, $where);
         $statement = $this->prepare($sql);
         return $statement->execute($data);
     }
 
-    public function delete($table, $data = [], $where) {
+    public function delete($table, $data, $where)
+    {
         $sql = "DELETE FROM `$table` WHERE $where";
         $statement = $this->prepare($sql);
         return $statement->execute($data);
     }
 
-    public function replace($table, $data = []) {
+    public function replace($table, $data)
+    {
         $sql = $this->getReplaceSQL($table, $data);
         $statement = $this->prepare($sql);
         return $statement->execute($data);
@@ -58,7 +62,8 @@ class Database extends PDO {
         return "INSERT INTO `$table` ( $columns ) VALUES ( $values )";
     }
 
-    public function getUpdateSQL($table, $data = [], $where) {
+    public function getUpdateSQL($table, $data, $where)
+    {
         $updates = implode(', ', array_map(function ($key, $value) {
             return '`'.$key.'` = :'.$key;
         }, array_keys($data), $data));
@@ -66,7 +71,8 @@ class Database extends PDO {
         return "UPDATE `$table` SET $updates WHERE $where";
     }
 
-    public function getReplaceSQL($table, $data = []) {
+    public function getReplaceSQL($table, $data)
+    {
         $columns = implode(', ', array_map(function ($key) {
             return '`'.$key.'`';
         }, array_keys($data)));
