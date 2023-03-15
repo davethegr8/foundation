@@ -6,19 +6,19 @@ use PDO;
 
 class Database extends PDO {
 
-    public function select($sql, $params = [], $fetch_style = null) {
+    public function select($sql, $params = [], $fetch_style = PDO::FETCH_DEFAULT) {
         $statement = $this->prepare($sql);
         $statement->execute($params);
         return $statement->fetchAll($fetch_style);
     }
 
-    public function selectRow($sql, $params = [], $fetch_style = null) {
+    public function selectRow($sql, $params = [], $fetch_style = PDO::FETCH_DEFAULT) {
         $statement = $this->prepare($sql);
         $statement->execute($params);
         return $statement->fetch($fetch_style);
     }
 
-    public function selectValue($sql, $params = [], $fetch_style = null) {
+    public function selectValue($sql, $params = [], $fetch_style = PDO::FETCH_DEFAULT) {
         $row = $this->selectRow($sql, $params, $fetch_style);
         return array_shift($row);
     }
