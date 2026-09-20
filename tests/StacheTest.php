@@ -12,7 +12,7 @@ class StacheTest extends TestCase
 {
     protected $engine;
 
-    public function setUp() {
+    public function setUp(): void {
         $this->engine = new Stache();
         $this->engine->allowTransforms(false);
     }
