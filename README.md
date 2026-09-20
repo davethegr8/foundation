@@ -1,6 +1,6 @@
 # hep/foundation
 
-[![CircleCI](https://circleci.com/gh/davethegr8/foundation.svg?style=svg)](https://circleci.com/gh/davethegr8/foundation)
+[![CI](https://github.com/davethegr8/foundation/actions/workflows/ci.yml/badge.svg)](https://github.com/davethegr8/foundation/actions/workflows/ci.yml)
 
 Mostly dependecy free provider for reducing repetitive work.
 

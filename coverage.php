@@ -1,66 +1,64 @@
 #!/usr/bin/env php
 <?php
 
-$statusURL = 'https://api.github.com/repos/'.getenv('CIRCLE_PROJECT_USERNAME').'/'.getenv('CIRCLE_PROJECT_REPONAME').'/statuses/'.getenv('CIRCLE_SHA1');
-// echo $statusURL, PHP_EOL;
-$statusData = [
-    'state' => 'pending',
-    'target_url' => getenv('CIRCLE_BUILD_URL'),
-    'description' => '',
-    'context' => 'davethegr8/code-coverage'
-];
+// Compares this build's line coverage with the last successful master build's
+// and fails when it went down. It replaces the CircleCI version, which did the
+// same by reading CircleCI's artifact API and posting a commit status; on GitHub
+// Actions the job's own result is the status, and the baseline is the `coverage`
+// artifact of the latest successful master run of ci.yml. Needs the gh CLI and
+// GH_TOKEN, both present on GitHub-hosted runners.
 
-postJSON($statusURL, $statusData);
+$new = coverageValue('docs/coverage/coverage.txt');
+$old = baselineValue();
 
-$artifacts = shell_exec('curl -s https://circleci.com/api/v1.1/project/github/davethegr8/foundation/latest/artifacts?circle-token='.getenv('CI_TOKEN').'&branch=master&filter=successful');
-
-$data = [];
-
-$old_report = json_decode($artifacts, true)[0]['url'];
-$data['old'] = getCoverageValue($old_report);
-
-$new_report = 'docs/coverage/coverage.txt';
-$data['new'] = getCoverageValue($new_report);
-
-$data['message'] = 'Coverage: '.$data['new'].' (old: '.$data['old'].')';
-
-$statusData['description'] = $data['message'];
-if($data['new'] >= $data['old']) {
-    $statusData['state'] = 'success';
-}
-else {
-    $statusData['state'] = 'error';
+if ($old === null) {
+    $message = "Coverage: $new% (no earlier master build to compare with)";
+    $ok = true;
+} else {
+    $message = "Coverage: $new% (master: $old%)";
+    $ok = $new >= $old;
 }
 
-postJSON($statusURL, $statusData);
+echo $message, PHP_EOL;
 
-echo json_encode($data);
-
-function getCoverageValue($report) {
-    $lines = explode("\n", file_get_contents($report));
-    preg_match('/([\d\.]+)%/', $lines[8], $match);
-    return $match[1];
+if ($summary = getenv('GITHUB_STEP_SUMMARY')) {
+    file_put_contents($summary, ($ok ? '' : '**Coverage went down.** ') . $message . PHP_EOL, FILE_APPEND);
 }
 
-function postJSON($url, $data) {
-    $data_string = json_encode($data);
+exit($ok ? 0 : 1);
 
-    $ch = curl_init($url);
+/**
+ * The "Lines: 12.34% (n/m)" percentage from PHPUnit's text coverage report.
+ */
+function coverageValue($report)
+{
+    if (!preg_match('/^\s*Lines:\s+([\d.]+)%/m', file_get_contents($report), $match)) {
+        fwrite(STDERR, "No line coverage found in $report" . PHP_EOL);
+        exit(2);
+    }
 
-    curl_setopt($ch, CURLOPT_POST, true);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    return (float) $match[1];
+}
 
-    curl_setopt($ch, CURLOPT_HTTPHEADER, [
-        'User-Agent: davethegr8/code-coverage',
-        'Authorization: token '.getenv('GITHUB_TOKEN'),
-        'Accept: application/vnd.github.v3.full+json',
-        'Content-Type: application/json',
-        'Content-Length: ' . strlen($data_string)
-    ]);
+/**
+ * Line coverage of the latest successful master run, or null when there isn't
+ * one (a new repository, or artifacts that have expired).
+ */
+function baselineValue()
+{
+    $run = trim((string) shell_exec(
+        'gh run list --workflow ci.yml --branch master --status success --limit 1 --json databaseId --jq ".[0].databaseId" 2>/dev/null'
+    ));
 
-    $result = curl_exec($ch);
-    curl_close($ch);
+    if ($run === '') {
+        return null;
+    }
 
-    return $result;
+    $dir = sys_get_temp_dir() . '/coverage-baseline';
+    shell_exec('rm -rf ' . escapeshellarg($dir));
+    shell_exec('gh run download ' . escapeshellarg($run) . ' --name coverage --dir ' . escapeshellarg($dir) . ' 2>/dev/null');
+
+    $report = "$dir/coverage.txt";
+
+    return is_file($report) ? coverageValue($report) : null;
 }

@@ -1,13 +1,17 @@
 {
     "name": "hep/foundation",
     "description": "",
-    "require": {},
+    "require": {
+        "php": ">=8.0.7",
+        "ext-pdo": "*"
+    },
     "require-dev": {
-        "phpunit/phpunit": "^5.7",
+        "phpunit/phpunit": "^9.6",
         "phpmd/phpmd": "^2.6"
     },
     "scripts": {
-        "test": "vendor/bin/phpunit --bootstrap vendor/autoload.php tests --coverage-text=docs/coverage/coverage.txt --coverage-html docs/coverage --whitelist src",
+        "test": "vendor/bin/phpunit",
+        "test:coverage": "vendor/bin/phpunit --coverage-text=docs/coverage/coverage.txt --coverage-html docs/coverage",
         "phpmd": "vendor/bin/phpmd ./src/ html cleancode,codesize,controversial,design,naming,unusedcode --ignore-violations-on-exit --reportfile docs/phpmd.html"
     },
     "autoload": {

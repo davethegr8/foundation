@@ -1,0 +1,80 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read # coverage.php downloads the last master run's coverage artifact
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: PHP ${{ matrix.php }}
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        # 8.0 is the floor: Database uses PDO::FETCH_DEFAULT, added in 8.0.7.
+        php: ['8.0', '8.1', '8.2', '8.3', '8.4']
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: pdo_sqlite
+          coverage: none
+          tools: composer:v2
+
+      - name: Install dependencies
+        run: composer install --no-interaction --no-progress --prefer-dist
+
+      - name: Run the tests
+        run: composer test
+
+  coverage:
+    name: Coverage
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: pdo_sqlite
+          coverage: pcov
+          tools: composer:v2
+
+      - name: Install dependencies
+        run: composer install --no-interaction --no-progress --prefer-dist
+
+      - name: Run the tests with coverage
+        run: composer test:coverage
+
+      - name: Show the coverage report
+        run: cat docs/coverage/coverage.txt
+
+      - name: Compare with the last master build
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: ./coverage.php
+
+      - name: Keep the report
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage
+          path: |
+            docs/coverage/coverage.txt
+            docs/coverage/
